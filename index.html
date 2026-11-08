@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blood Bank System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+<div id="loginBox" class="box form">
+  <h2>🩸 Blood Bank Login</h2>
+  <input id="username" placeholder="Username">
+  <input id="password" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+</div>
+
+
+<div id="app" style="display:none">
+  <header>
+    <h1>🩸 Blood Bank System</h1>
+    <button onclick="showPage('dashboard')">Dashboard</button>
+    <button onclick="showPage('donors')">Donors</button>
+    <button onclick="showPage('register')">Register Donor</button>
+    <button onclick="showPage('stock')">Blood Stock</button>
+    <button onclick="showPage('requests')">Requests</button>
+    <button class="grey" onclick="logout()">Logout</button>
+  </header>
+
+  <main>
+
+    <div id="page-dashboard" class="page">
+      <h2>Blood Stock Report</h2>
+      <div class="cards">
+        <div class="card">Total units<br><b id="totalUnits">0</b></div>
+        <div class="card">Active donors<br><b id="totalDonors">0</b></div>
+        <div class="card">Pending requests<br><b id="pendingCount">0</b></div>
+      </div>
+      <table>
+        <thead><tr><th>Blood Group</th><th>Units</th><th>Active Donors</th><th>Level</th></tr></thead>
+        <tbody id="reportRows"></tbody>
+      </table>
+      <br><button onclick="window.print()">Print report</button>
+    </div>
+
+   
+    <div id="page-donors" class="page" style="display:none">
+      <h2>Donors</h2>
+      <div class="box">
+        Blood group: <select id="filterGroup"></select>
+        Name / city: <input id="search" placeholder="search...">
+        <button onclick="loadDonors()">Search</button>
+      </div>
+      <table>
+        <thead><tr><th>Name</th><th>Group</th><th>Age</th><th>Phone</th><th>City</th><th>Last donation</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="donorRows"></tbody>
+      </table>
+    </div>
+
+   
+    <div id="page-register" class="page" style="display:none">
+      <h2 id="donorTitle">Register Donor</h2>
+      <div class="box form">
+        <input type="hidden" id="donorId">
+        <label>Name</label><input id="dName">
+        <label>Age (18 - 65)</label><input id="dAge" type="number">
+        <label>Gender</label>
+        <select id="dGender"><option>Male</option><option>Female</option><option>Other</option></select>
+        <label>Phone</label><input id="dPhone">
+        <label>City</label><input id="dCity">
+        <label>Blood group</label><select id="donorGroup"></select>
+        <label>Last donation date (optional)</label><input id="dLast" type="date">
+        <button onclick="saveDonor()">Save</button>
+        <button class="grey" onclick="clearDonorForm()">Clear</button>
+      </div>
+    </div>
+
+
+    <div id="page-stock" class="page" style="display:none">
+      <h2>Blood Stock</h2>
+      <table>
+        <thead><tr><th>Blood Group</th><th>Units</th><th>Change units</th></tr></thead>
+        <tbody id="stockRows"></tbody>
+      </table>
+      <h3>Add a new blood group</h3>
+      <div class="box">
+        <input id="newGroup" placeholder="e.g. Bombay">
+        <button onclick="addGroup()">Add group</button>
+      </div>
+    </div>
+
+
+    <div id="page-requests" class="page" style="display:none">
+      <h2>Blood Requests</h2>
+      <div class="box form">
+        <input id="rPatient" placeholder="Patient name">
+        <input id="rHospital" placeholder="Hospital">
+        <select id="reqGroup"></select>
+        <input id="rUnits" type="number" placeholder="Units needed">
+        <button onclick="saveRequest()">Record request</button>
+      </div>
+      <table>
+        <thead><tr><th>Patient</th><th>Hospital</th><th>Group</th><th>Units</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="requestRows"></tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
